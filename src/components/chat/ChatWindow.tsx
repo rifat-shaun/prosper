@@ -6,9 +6,10 @@ import Loader from "./Loader";
 interface MessageProps {
   messages: Message[];
   isBotTyping: boolean;
+  onSend(message: string): void;
 }
 
-const ChatWindow: FC<MessageProps> = ({ messages, isBotTyping }) => {
+const ChatWindow: FC<MessageProps> = ({ messages, isBotTyping, onSend }) => {
   return (
     <div className="h-[calc(100%-190px)] overflow-y-auto p-2 no-scrollbar">
       {messages.map((message: Message) => (
@@ -16,6 +17,7 @@ const ChatWindow: FC<MessageProps> = ({ messages, isBotTyping }) => {
           key={message.id}
           message={message}
           isBotTyping={isBotTyping}
+          onSend={onSend}
         />
       ))}
 

@@ -4,9 +4,14 @@ import { Message } from "@/types/Chat";
 interface MessageProps {
   message: Message;
   isBotTyping: boolean;
+  onSend(message: string): void;
 }
 
-const MessageComponent: FC<MessageProps> = ({ message, isBotTyping }) => {
+const MessageComponent: FC<MessageProps> = ({
+  message,
+  isBotTyping,
+  onSend,
+}) => {
   const messageEndRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -14,7 +19,7 @@ const MessageComponent: FC<MessageProps> = ({ message, isBotTyping }) => {
   }, [message, isBotTyping]);
 
   return (
-    <>
+    <div className="flex flex-col items-between">
       <div
         className={`flex gap-2 justify-start items-flex-start my-2 ${
           message.sender === "bot" ? "" : "flex-row-reverse"
@@ -27,7 +32,7 @@ const MessageComponent: FC<MessageProps> = ({ message, isBotTyping }) => {
         ></div>
 
         <div
-          className={`max-w-[calc(100%-100px)] px-4 py-2 border rounded-lg ${
+          className={`max-w-[calc(100%-100px)] px-4 py-2 border rounded-lg font-normal text-sm ${
             message.sender === "bot"
               ? "border-solid border-neutral-300"
               : "bg-[#EAF2F6]"
@@ -35,10 +40,18 @@ const MessageComponent: FC<MessageProps> = ({ message, isBotTyping }) => {
         >
           {message.content}
         </div>
-
         <div ref={messageEndRef} />
       </div>
-    </>
+
+      {message?.suggestedResponse ? (
+        <div
+          className={`px-4 py-2 border rounded-lg font-normal text-sm text-center bg-[#EAF2F6] cursor-pointer bottom-4`}
+          onClick={() => onSend(message?.suggestedResponse || "")}
+        >
+          {message?.suggestedResponse}
+        </div>
+      ) : null}
+    </div>
   );
 };
 

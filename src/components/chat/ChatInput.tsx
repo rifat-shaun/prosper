@@ -21,7 +21,7 @@ const ChatInput: FC<ChatInputProps> = ({ onSend }) => {
       <input
         type="text"
         placeholder="Write something..."
-        className="w-full p-2 outline-none focus:outline-none border-none"
+        className="w-full p-2 outline-none focus:outline-none border-none text-base"
         value={input}
         onChange={(e) => setInput(e.target.value)}
         onKeyUp={(e) => e.key === "Enter" && handleSend()}
