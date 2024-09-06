@@ -5,6 +5,7 @@ export interface Message {
   timestamp: Date;
 }
 
-export interface ChatState {
-  messages: Message[];
+export interface ChatStep {
+  id: number;
+  title: string;
 }

@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { FC, useState } from "react";
 import { CloseIcon } from "../common/icons/CloseIcon";
 import { CircleIcon } from "../common/icons/CircleIcon";
+import { ChatStep } from "@/types/Chat";
 
-const Steps = [
+const Steps: ChatStep[] = [
   {
     id: 1,
     title: "Welcome",
@@ -25,16 +26,21 @@ const Steps = [
   },
 ];
 
-type TProps = {
+interface ChatHeaderProps {
   onClose: () => void;
-};
+}
 
-const ChatHeader = ({ onClose }: TProps) => {
+const ChatHeader: FC<ChatHeaderProps> = ({ onClose }) => {
   const [showAllSteps, setShowAllSteps] = useState<boolean>(false);
   const [activeStep, setActiveStep] = useState<number>(1);
 
   const toggleSteps = (): void => {
     setShowAllSteps(!showAllSteps);
+  };
+
+  const handleOnActiveItemChange = (id: number): void => {
+    toggleSteps();
+    setActiveStep(id);
   };
 
   return (
@@ -47,7 +53,7 @@ const ChatHeader = ({ onClose }: TProps) => {
       </div>
       <div className="relative w-full">
         <div className="h-9 bg-primary-900 font-semibold text-white flex justify-between items-center px-3 py-2">
-          {Steps[activeStep - 1]?.title} ({activeStep}/5)
+          {Steps[activeStep - 1]?.title} ({activeStep}/{Steps.length})
           <span onClick={toggleSteps} className="cursor-pointer">
             <CircleIcon />
           </span>
@@ -55,7 +61,7 @@ const ChatHeader = ({ onClose }: TProps) => {
 
         {showAllSteps && (
           <div className="absolute top-12 z-50 bg-primary-900 flex flex-col w-full">
-            {Steps?.map((step, index) => (
+            {Steps?.map((step: ChatStep, index: number) => (
               <div
                 key={index}
                 className={`cursor-pointer px-3 py-2 ${
@@ -63,7 +69,7 @@ const ChatHeader = ({ onClose }: TProps) => {
                     ? "font-semibold text-white"
                     : "font-medium text-gray-300"
                 }`}
-                onClick={() => setActiveStep(step.id)}
+                onClick={() => handleOnActiveItemChange(step.id)}
               >
                 {step.title}
               </div>
