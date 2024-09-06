@@ -8,7 +8,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["var(--font-gliroy)", "sans-serif"],
+        roboto: ["Roboto", "sans-serif"],
       },
       boxShadow: {
         "bottom-shadow": "0px 8px 24px 0px rgba(0, 0, 0, 0.08)",

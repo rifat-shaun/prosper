@@ -3,14 +3,15 @@ import { Message } from "@/types/Chat";
 
 interface MessageProps {
   message: Message;
+  isBotTyping: boolean;
 }
 
-const MessageComponent: FC<MessageProps> = ({ message }) => {
+const MessageComponent: FC<MessageProps> = ({ message, isBotTyping }) => {
   const messageEndRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [message]);
+  }, [message, isBotTyping]);
 
   return (
     <>
@@ -24,6 +25,7 @@ const MessageComponent: FC<MessageProps> = ({ message }) => {
             message.sender === "bot" ? "bg-[#2cb5fa]" : "bg-[#fa2c5f]"
           }`}
         ></div>
+
         <div
           className={`max-w-[calc(100%-100px)] px-4 py-2 border rounded-lg ${
             message.sender === "bot"

@@ -9,12 +9,12 @@ interface ChatbotProps {
 }
 
 const Chatbot: FC<ChatbotProps> = ({ onClose }) => {
-  const { messages, sendMessage } = useChat();
+  const { messages, isBotTyping, sendMessage } = useChat();
 
   return (
     <div className="fixed bottom-24 right-6 h-[606px] w-[350px] bg-white shadow-lg z-50">
       <ChatHeader onClose={onClose} />
-      <ChatWindow messages={messages} />
+      <ChatWindow messages={messages} isBotTyping={isBotTyping} />
       <hr className="my-0 h-[2px] border-0 bg-neutral-300" />
       <ChatInput onSend={sendMessage} />
     </div>

@@ -5,6 +5,7 @@ import { DUMMY_MESSAGES } from "./../components/chat/DummyMessages";
 
 export const useChat = () => {
   const [messages, setMessages] = useState<Message[]>([]);
+  const [isBotTyping, setIsBotTyping] = useState<boolean>(false);
 
   const sendMessage = (content: string) => {
     const newMessage: Message = {
@@ -16,7 +17,7 @@ export const useChat = () => {
 
     setMessages((prevMessages) => [...prevMessages, newMessage]);
 
-    // Simulate bot response
+    setIsBotTyping(true);
     setTimeout(() => {
       const botResponse: Message = {
         id: "1", //uuidv4(),
@@ -24,6 +25,7 @@ export const useChat = () => {
         sender: "bot",
         timestamp: new Date(),
       };
+      setIsBotTyping(false);
       setMessages((prevMessages) => [...prevMessages, botResponse]);
     }, 1000);
   };
@@ -36,5 +38,5 @@ export const useChat = () => {
     return () => clearTimeout(interval);
   }, []);
 
-  return { messages, sendMessage };
+  return { messages, isBotTyping, sendMessage };
 };
