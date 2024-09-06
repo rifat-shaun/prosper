@@ -1,15 +1,32 @@
+import { FC, useState } from "react";
 import { Button } from "../common/base/Button";
 import { ArrowRight } from "../common/icons/ArrowRight";
 
-const ChatInput = () => {
+interface ChatInputProps {
+  onSend(message: string): void;
+}
+
+const ChatInput: FC<ChatInputProps> = ({ onSend }) => {
+  const [input, setInput] = useState("");
+
+  const handleSend = () => {
+    if (input.trim()) {
+      onSend(input);
+      setInput("");
+    }
+  };
+
   return (
     <div className="border-t border-gray-900 p-3 flex items-center">
       <input
         type="text"
         placeholder="Write something..."
         className="w-full p-2 outline-none focus:outline-none border-none"
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+        onKeyUp={(e) => e.key === "Enter" && handleSend()}
       />
-      <Button onClick={() => {}}>
+      <Button onClick={handleSend}>
         <ArrowRight />
       </Button>
     </div>
