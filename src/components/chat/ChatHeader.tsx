@@ -1,8 +1,6 @@
 import { useState } from "react";
-import { Button } from "../base/Button";
-import { ArrowRight } from "../icons/ArrowRight";
-import { CircleIcon } from "../icons/CircleIcon";
-import { CloseIcon } from "../icons/CloseIcon";
+import { CloseIcon } from "../common/icons/CloseIcon";
+import { CircleIcon } from "../common/icons/CircleIcon";
 
 const Steps = [
   {
@@ -31,7 +29,7 @@ type TProps = {
   onClose: () => void;
 };
 
-const ChatWindow = ({ onClose }: TProps) => {
+const ChatHeader = ({ onClose }: TProps) => {
   const [showAllSteps, setShowAllSteps] = useState<boolean>(false);
   const [activeStep, setActiveStep] = useState<number>(1);
 
@@ -40,7 +38,7 @@ const ChatWindow = ({ onClose }: TProps) => {
   };
 
   return (
-    <div className="fixed bottom-24 right-6 h-[606px] w-[350px] bg-white shadow-lg z-50">
+    <>
       <div className="h-9 bg-neutral-500 font-semibold text-white flex justify-between items-center px-3 py-2">
         ProsperBot
         <span onClick={onClose} className="cursor-pointer">
@@ -73,23 +71,8 @@ const ChatWindow = ({ onClose }: TProps) => {
           </div>
         )}
       </div>
-
-      <div className="h-[calc(100%-190px)] overflow-y-auto p-2">Hello</div>
-
-      <hr className="my-0 h-[2px] border-0 bg-neutral-300" />
-
-      <div className="border-t border-gray-900 p-3 flex items-center">
-        <input
-          type="text"
-          placeholder="Write something..."
-          className="w-full p-2 outline-none focus:outline-none border-none"
-        />
-        <Button onClick={onClose}>
-          <ArrowRight />
-        </Button>
-      </div>
-    </div>
+    </>
   );
 };
 
-export default ChatWindow;
+export default ChatHeader;

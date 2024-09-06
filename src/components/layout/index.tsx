@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import ChatButton from "../common/chat/ChatButton";
+import ChatButton from "../chat/ChatButton";
 
 const Layout = () => {
   return (

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import ChatWindow from "./ChatWindow";
+import Chatbot from "./Chatbot";
 
 const ChatButton = () => {
   const [isChatOpen, setIsChatOpen] = useState<boolean>(false);
@@ -23,7 +23,7 @@ const ChatButton = () => {
         </button>
       </div>
 
-      {isChatOpen && <ChatWindow onClose={handleCloseChat} />}
+      {isChatOpen && <Chatbot onClose={handleCloseChat} />}
     </div>
   );
 };
