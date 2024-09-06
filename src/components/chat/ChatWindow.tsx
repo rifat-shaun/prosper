@@ -8,7 +8,7 @@ interface MessageProps {
 
 const ChatWindow: FC<MessageProps> = ({ messages }) => {
   return (
-    <div className="h-[calc(100%-190px)] overflow-y-auto p-2">
+    <div className="h-[calc(100%-190px)] overflow-y-auto p-2 no-scrollbar">
       {messages.map((message: Message) => (
         <MessageComponent key={message.id} message={message} />
       ))}

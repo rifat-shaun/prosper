@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Message } from "../types/Chat";
 import { DUMMY_MESSAGES } from "./../components/chat/DummyMessages";
 // import { v4 as uuidv4 } from 'uuid';
 
 export const useChat = () => {
-  const [messages, setMessages] = useState<Message[]>([DUMMY_MESSAGES[0]]);
+  const [messages, setMessages] = useState<Message[]>([]);
 
   const sendMessage = (content: string) => {
     const newMessage: Message = {
@@ -27,6 +27,14 @@ export const useChat = () => {
       setMessages((prevMessages) => [...prevMessages, botResponse]);
     }, 1000);
   };
+
+  useEffect(() => {
+    const interval = setTimeout(() => {
+        setMessages([DUMMY_MESSAGES[0]]);
+    }, 500);
+
+    return () => clearTimeout(interval);
+  }, []);
 
   return { messages, sendMessage };
 };
