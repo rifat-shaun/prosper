@@ -6,3 +6,4 @@ export * from "./CurrentStatusOfFinance";
 export * from "./AddIncomeRequest";
 export * from "./VeryNice";
 export * from "./SetCurrentStatusOfFinance";
+export * from "./ResponseNotClear";

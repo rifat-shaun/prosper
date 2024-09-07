@@ -3,13 +3,13 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 interface ChatState {
   visibleChatId: string;
   isChildScreenVisibleOnTopOfParent: boolean;
-  triggerUserMessageWithText: string;
+  triggerUserMessageWithText: string | null;
 }
 
 const initialState: ChatState = {
   visibleChatId: "",
   isChildScreenVisibleOnTopOfParent: false,
-  triggerUserMessageWithText: "",
+  triggerUserMessageWithText: null,
 };
 
 export const chatSlice = createSlice({
@@ -25,7 +25,7 @@ export const chatSlice = createSlice({
     ) => {
       state.isChildScreenVisibleOnTopOfParent = action.payload;
     },
-    updateTriggerMessage: (state, action: PayloadAction<string>) => {
+    updateTriggerMessage: (state, action: PayloadAction<string | null>) => {
       state.triggerUserMessageWithText = action.payload;
     },
   },

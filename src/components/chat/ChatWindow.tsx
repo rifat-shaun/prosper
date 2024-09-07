@@ -2,8 +2,7 @@ import { Message } from "@/types/Chat";
 import MessageComponent from "./Message";
 import { FC, ReactNode } from "react";
 import Loader from "./Loader";
-import { useDispatch, useSelector } from "react-redux";
-import { updateIsChildScreenVisibleOnTopOfParent } from "./../../redux/slices/chatSlice";
+import { useSelector } from "react-redux";
 
 interface MessageProps {
   messages: Message[];

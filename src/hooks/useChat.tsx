@@ -3,11 +3,12 @@ import _ from "lodash";
 import { Message } from "../types/Chat";
 import { BOT_MESSAGES } from "../components/chat/BotMessages";
 import { useDispatch, useSelector } from "react-redux";
-import { Sender } from "./../constants/chat";
+import { BotMessageIds, Sender } from "../constants/chat";
 import {
   updateTriggerMessage,
   updateVisibleChatId,
-} from "./../redux/slices/chatSlice";
+} from "../redux/slices/chatSlice";
+import { ResponseNotClear } from "./../components/chat/chat-screens";
 
 export const useChat = () => {
   const dispatch = useDispatch();
@@ -25,9 +26,9 @@ export const useChat = () => {
     const lastMessageDetails = messages[messages.length - 1];
 
     const notUnderstandMessage: Message = {
-      id: "1",
-      content: "I didn't get that. Can you please rephrase?",
-      sender: "bot",
+      id: BotMessageIds.RESPONSE_NOT_CLEAR,
+      content: <ResponseNotClear />,
+      sender: Sender.BOT,
       timestamp: new Date(),
     };
 
@@ -68,7 +69,7 @@ export const useChat = () => {
       });
     }
 
-    if (!botLastResponse?.suggestedResponse?.length || isResponseFound) {
+    if (!botLastResponse?.acceptedResponses?.length || isResponseFound) {
       return getNextMessage();
     } else {
       return undefined;
@@ -103,8 +104,10 @@ export const useChat = () => {
     setIsBotTyping(true);
     const botResponse: Message | undefined = generateBotResponse(content);
 
-    if (botResponse) removeLastSuggestedMessage();
+    removeLastSuggestedMessage();
     setMessages((prevMessages) => [...prevMessages, newMessage]);
+
+    console.log("===> botResponse", botResponse);
 
     setTimeout(() => {
       if (botResponse) {
@@ -128,7 +131,7 @@ export const useChat = () => {
     if (triggerUserMessageWithText) {
       sendMessage(triggerUserMessageWithText);
 
-      dispatch(updateTriggerMessage(""));
+      dispatch(updateTriggerMessage(null));
     }
   }, [triggerUserMessageWithText]);
 

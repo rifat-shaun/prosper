@@ -4,6 +4,7 @@ export enum Sender {
 }
 
 export enum BotMessageIds {
+  RESPONSE_NOT_CLEAR = "response-not-clear",
   WELCOME_MESSAGE = "welcome-message",
   ENABLE_ACCESS_REQUEST = "enable-access-request",
   ENABLE_ACCESS_HELPER = "enable-access-helper",
