@@ -1,5 +1,5 @@
 import { Message } from "@/types/Chat";
-import { WelcomeMessage } from "./chat-screens";
+import { EnableAccessRequest, WelcomeMessage } from "./chat-screens";
 import { BotMessageIds, Sender } from "./../../constants/chat";
 
 export const DUMMY_MESSAGES: Message[] = [
@@ -21,7 +21,7 @@ export const DUMMY_MESSAGES: Message[] = [
   },
   {
     id: BotMessageIds.ENABLE_ACCESS_REQUEST,
-    content: `You need to enable access for ProsperBot so I can help you set up your financial plan.`,
+    content: <EnableAccessRequest />,
     sender: Sender.BOT,
     timestamp: new Date(),
   },

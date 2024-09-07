@@ -1,5 +1,6 @@
 import React, { FC, useEffect, useRef } from "react";
 import { Message } from "@/types/Chat";
+import { Sender } from "../../constants/chat";
 
 interface MessageProps {
   message: Message;
@@ -19,28 +20,25 @@ const MessageComponent: FC<MessageProps> = ({
   }, [message, isBotTyping]);
 
   return (
-    <div className="flex flex-col items-between">
+    <div className="flex flex-col">
       <div
-        className={`flex gap-2 justify-start items-flex-start my-2 ${
-          message.sender === "bot" ? "" : "flex-row-reverse"
+        className={`flex items-flex-start justify-start gap-2 mb-4 ${
+          message?.sender === Sender.BOT ? "" : "flex-row-reverse"
         }`}
       >
-        <div
-          className={`w-8 h-8 border border-solid border-neutral-300 rounded-full ${
-            message.sender === "bot" ? "bg-[#2cb5fa]" : "bg-[#fa2c5f]"
-          }`}
-        ></div>
+        <img
+          src="https://example.com/profile-pic.jpg"
+          alt="Profile Picture"
+          className="w-8 h-8 rounded-full border border-solid"
+        />
 
-        <div
-          className={`max-w-[calc(100%-100px)] px-4 py-2 border rounded-lg font-normal text-sm ${
-            message.sender === "bot"
-              ? ""
-              : "bg-[#EAF2F6]"
-          }`}
-        >
-          {message.content}
-        </div>
-        <div ref={messageEndRef} />
+        {message.sender === Sender.BOT ? (
+          <div className="max-w-[calc(100%-85px)]">{message.content}</div>
+        ) : (
+          <div className="max-w-[calc(100%-120px)] border rounded-lg font-normal text-sm px-4 py-2 bg-[#EAF2F6]">
+            {message.content}
+          </div>
+        )}
       </div>
 
       {message?.suggestedResponse ? (
