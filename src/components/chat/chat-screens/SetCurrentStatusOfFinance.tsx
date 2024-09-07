@@ -6,9 +6,12 @@ import {
   updateTriggerMessage,
   updateVisibleChatId,
 } from "./../../../redux/slices/chatSlice";
+import { RangeSlider } from "./../../common/RangeSlider";
+import { useState } from "react";
 
 export const SetCurrentStatusFinance = () => {
   const dispatch = useDispatch();
+  const [values, setValues] = useState([5]);
 
   const showEnableAccessPopup = () => {
     dispatch(updateTriggerMessage("I feel in control 😌"));
@@ -23,10 +26,9 @@ export const SetCurrentStatusFinance = () => {
         <div className="flex flex-col items-center gap-1 w-56">
           😌
           <div>In control</div>
-          <img
-            src={require("./../../../assets/images/slider.png")}
-            className="w-52 ml-[-10px]"
-          />
+          <div className="ml-[-10px] my-2">
+          <RangeSlider values={values} setValues={setValues} />
+          </div>
         </div>
         <div className="flex justify-center mt-2">
           <Button
