@@ -10,4 +10,6 @@ export enum BotMessageIds {
   ENABLE_ACCESS_SUCCESS = "enable-access-success",
   CURRENT_STATUS_OF_FINANCE = "current-status-of-finance",
   SET_CURRENT_STATUS_OF_FINANCE = "set-current-status-of-finance",
+  VERY_NICE = "very-nice",
+  ADD_INCOME_REQUEST = "add-income-request",
 }

@@ -26,7 +26,10 @@ const ChatInput: FC<ChatInputProps> = ({ onSend }) => {
         onChange={(e) => setInput(e.target.value)}
         onKeyUp={(e) => e.key === "Enter" && handleSend()}
       />
-      <Button onClick={handleSend}>
+      <Button
+        onClick={handleSend}
+        className="bg-secondary-900 text-white px-6 py-3"
+      >
         <ArrowRight />
       </Button>
     </div>

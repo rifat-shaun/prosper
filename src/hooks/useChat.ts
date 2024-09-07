@@ -7,10 +7,10 @@ import { Sender } from "./../constants/chat";
 import { updateVisibleChatId } from "./../redux/slices/chatSlice";
 
 export const useChat = () => {
+  const dispatch = useDispatch();
   const botVisibleChatId = useSelector(
     (state: any) => state.chat.visibleChatId
   );
-  const dispatch = useDispatch();
 
   const [messages, setMessages] = useState<Message[]>([]);
   const [isBotTyping, setIsBotTyping] = useState<boolean>(false);

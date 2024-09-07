@@ -1,6 +1,7 @@
 import React, { FC, useEffect, useRef } from "react";
 import { Message } from "@/types/Chat";
 import { Sender } from "../../constants/chat";
+const ladyImgPath = require("./../../assets/images/ladyImg.png");
 
 interface MessageProps {
   message: Message;
@@ -14,6 +15,7 @@ const MessageComponent: FC<MessageProps> = ({
   onSend,
 }) => {
   const messageEndRef = useRef<HTMLDivElement | null>(null);
+  const isMessageFromBot = message.sender === Sender.BOT;
 
   useEffect(() => {
     messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -23,16 +25,16 @@ const MessageComponent: FC<MessageProps> = ({
     <div className="flex flex-col">
       <div
         className={`flex items-flex-start justify-start gap-2 mb-4 ${
-          message?.sender === Sender.BOT ? "" : "flex-row-reverse"
+          isMessageFromBot ? "" : "flex-row-reverse"
         }`}
       >
-        <img
-          src="https://example.com/profile-pic.jpg"
-          alt="Profile Picture"
-          className="w-8 h-8 rounded-full border border-solid"
-        />
+        {isMessageFromBot ? (
+          <img src={ladyImgPath} alt="pic" className="w-8 h-8 rounded-full" />
+        ) : (
+          <div className="w-8 h-8 rounded-full bg-[#FB42B0]" />
+        )}
 
-        {message.sender === Sender.BOT ? (
+        {isMessageFromBot ? (
           <div className="max-w-[calc(100%-85px)]">{message.content}</div>
         ) : (
           <div className="max-w-[calc(100%-120px)] border rounded-lg font-normal text-sm px-4 py-2 bg-[#EAF2F6]">

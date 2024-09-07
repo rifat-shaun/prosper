@@ -1,9 +1,12 @@
 import { Message } from "@/types/Chat";
 import {
+  AddIncomeRequest,
   CurrentStatusOfFinance,
   EnableAccessHelper,
   EnableAccessRequest,
   EnableAccessSuccess,
+  SetCurrentStatusFinance,
+  VeryNice,
   WelcomeMessage,
 } from "./chat-screens";
 import { BotMessageIds, Sender } from "./../../constants/chat";
@@ -52,7 +55,19 @@ export const BOT_MESSAGES: Message[] = [
   },
   {
     id: BotMessageIds.SET_CURRENT_STATUS_OF_FINANCE,
-    content: "Hello",
+    content: <SetCurrentStatusFinance />,
+    sender: Sender.BOT,
+    timestamp: new Date(),
+  },
+  {
+    id: BotMessageIds.VERY_NICE,
+    content: <VeryNice />,
+    sender: Sender.BOT,
+    timestamp: new Date(),
+  },
+  {
+    id: BotMessageIds.ADD_INCOME_REQUEST,
+    content: <AddIncomeRequest />,
     sender: Sender.BOT,
     timestamp: new Date(),
   },
