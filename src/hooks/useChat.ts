@@ -4,12 +4,18 @@ import { Message } from "../types/Chat";
 import { BOT_MESSAGES } from "../components/chat/BotMessages";
 import { useDispatch, useSelector } from "react-redux";
 import { Sender } from "./../constants/chat";
-import { updateVisibleChatId } from "./../redux/slices/chatSlice";
+import {
+  updateTriggerMessage,
+  updateVisibleChatId,
+} from "./../redux/slices/chatSlice";
 
 export const useChat = () => {
   const dispatch = useDispatch();
   const botVisibleChatId = useSelector(
     (state: any) => state.chat.visibleChatId
+  );
+  const triggerUserMessageWithText = useSelector(
+    (state: any) => state.chat.triggerUserMessageWithText
   );
 
   const [messages, setMessages] = useState<Message[]>([]);
@@ -117,6 +123,14 @@ export const useChat = () => {
 
     return () => clearTimeout(interval);
   }, []);
+
+  useEffect(() => {
+    if (triggerUserMessageWithText) {
+      sendMessage(triggerUserMessageWithText);
+
+      dispatch(updateTriggerMessage(""));
+    }
+  }, [triggerUserMessageWithText]);
 
   useEffect(() => {
     if (botVisibleChatId) {
