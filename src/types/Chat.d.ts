@@ -13,4 +13,5 @@ export interface Message {
 export interface ChatStep {
   id: number;
   title: string;
+  icon: ReactNode;
 }
