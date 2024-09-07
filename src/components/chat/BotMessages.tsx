@@ -1,7 +1,12 @@
 import { Message } from "@/types/Chat";
-import { EnableAccessRequest, WelcomeMessage } from "./chat-screens";
+import {
+  CurrentStatusOfFinance,
+  EnableAccessHelper,
+  EnableAccessRequest,
+  EnableAccessSuccess,
+  WelcomeMessage,
+} from "./chat-screens";
 import { BotMessageIds, Sender } from "./../../constants/chat";
-import { EnableAccessHelper } from "./chat-screens/EnableAccessHelper";
 
 export const BOT_MESSAGES: Message[] = [
   {
@@ -31,6 +36,24 @@ export const BOT_MESSAGES: Message[] = [
     content: <EnableAccessHelper />,
     sender: Sender.BOT,
     renderOnFullScreen: true,
+    timestamp: new Date(),
+  },
+  {
+    id: BotMessageIds.ENABLE_ACCESS_SUCCESS,
+    content: <EnableAccessSuccess />,
+    sender: Sender.BOT,
+    timestamp: new Date(),
+  },
+  {
+    id: BotMessageIds.CURRENT_STATUS_OF_FINANCE,
+    content: <CurrentStatusOfFinance />,
+    sender: Sender.BOT,
+    timestamp: new Date(),
+  },
+  {
+    id: BotMessageIds.SET_CURRENT_STATUS_OF_FINANCE,
+    content: "Hello",
+    sender: Sender.BOT,
     timestamp: new Date(),
   },
 ];

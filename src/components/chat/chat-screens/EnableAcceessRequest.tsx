@@ -2,12 +2,16 @@ import { Button } from "../../common/base/Button";
 import { BotMessageWrapper } from "./BotMessageWrapper";
 import { useDispatch } from "react-redux";
 import { BotMessageIds } from "./../../../constants/chat";
-import { updateVisibleChatId } from "./../../../redux/slices/chatSlice";
+import {
+  updateIsChildScreenVisibleOnTopOfParent,
+  updateVisibleChatId,
+} from "./../../../redux/slices/chatSlice";
 
 export const EnableAccessRequest = () => {
   const dispatch = useDispatch();
 
   const showEnableAccessPopup = () => {
+    dispatch(updateIsChildScreenVisibleOnTopOfParent(true));
     dispatch(updateVisibleChatId(BotMessageIds.ENABLE_ACCESS_HELPER));
   };
 

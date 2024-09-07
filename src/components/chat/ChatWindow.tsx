@@ -2,6 +2,8 @@ import { Message } from "@/types/Chat";
 import MessageComponent from "./Message";
 import { FC, ReactNode } from "react";
 import Loader from "./Loader";
+import { useDispatch, useSelector } from "react-redux";
+import { updateIsChildScreenVisibleOnTopOfParent } from "./../../redux/slices/chatSlice";
 
 interface MessageProps {
   messages: Message[];
@@ -16,13 +18,21 @@ const ChatWindow: FC<MessageProps> = ({
   setRenderChildOnParentScreen,
   onSend,
 }) => {
+  const canRenderOnParent = useSelector(
+    (state: any) => state.chat.isChildScreenVisibleOnTopOfParent
+  );
+
+  const renderOnParent = (content: ReactNode) => {
+    setRenderChildOnParentScreen(content);
+  };
+
   return (
     <div className="h-[calc(100%-190px)] overflow-y-auto p-2 no-scrollbar relative">
       {messages.map((message: Message) => (
         <>
-          {message?.renderOnFullScreen ? (
-            setRenderChildOnParentScreen(message?.content)
-          ) : (
+          {message?.renderOnFullScreen && canRenderOnParent ? (
+            renderOnParent(message?.content)
+          ) : message?.renderOnFullScreen ? null : (
             <MessageComponent
               key={message.id}
               message={message}

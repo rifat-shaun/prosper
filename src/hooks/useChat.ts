@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import _, { update } from "lodash";
+import _ from "lodash";
 import { Message } from "../types/Chat";
 import { BOT_MESSAGES } from "../components/chat/BotMessages";
 import { useDispatch, useSelector } from "react-redux";

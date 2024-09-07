@@ -51,6 +51,8 @@ const MessageComponent: FC<MessageProps> = ({
           </div>
         </div>
       ) : null}
+
+      <div ref={messageEndRef} />
     </div>
   );
 };
