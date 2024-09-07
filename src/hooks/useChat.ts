@@ -1,9 +1,17 @@
 import { useEffect, useState } from "react";
-import _ from "lodash";
+import _, { update } from "lodash";
 import { Message } from "../types/Chat";
-import { DUMMY_MESSAGES } from "../components/chat/BotMessages";
+import { BOT_MESSAGES } from "../components/chat/BotMessages";
+import { useDispatch, useSelector } from "react-redux";
+import { Sender } from "./../constants/chat";
+import { updateVisibleChatId } from "./../redux/slices/chatSlice";
 
 export const useChat = () => {
+  const botVisibleChatId = useSelector(
+    (state: any) => state.chat.visibleChatId
+  );
+  const dispatch = useDispatch();
+
   const [messages, setMessages] = useState<Message[]>([]);
   const [isBotTyping, setIsBotTyping] = useState<boolean>(false);
 
@@ -26,35 +34,36 @@ export const useChat = () => {
     }, 1000);
   };
 
-  const sendNextMessage = () => {
-    const newMessage: Message = DUMMY_MESSAGES[messages.length];
-    return newMessage;
+  const getNextMessage = () => {
+    const currentBotMessageIndex = BOT_MESSAGES.findIndex(
+      (message) => message.id === botVisibleChatId
+    );
+
+    const nextMessage = BOT_MESSAGES[currentBotMessageIndex + 1];
+    return nextMessage;
   };
 
   const generateBotResponse = (userResponse: string): Message | undefined => {
-    const lastMessageDetails = messages[messages.length - 1];
+    const botLastResponse = messages?.find(
+      (message) => message.id === botVisibleChatId
+    );
+
     let isResponseFound = false;
 
-    if (lastMessageDetails?.acceptedResponses) {
-      lastMessageDetails.acceptedResponses.forEach(
-        (acceptedResponse: string) => {
-          if (
-            acceptedResponse
-              .toLowerCase()
-              .includes(userResponse.toLowerCase()) ||
-            userResponse
-              .toLowerCase()
-              .includes(acceptedResponse.toLowerCase()) ||
-            acceptedResponse?.toLowerCase() === userResponse.toLowerCase()
-          ) {
-            isResponseFound = true;
-          }
+    if (botLastResponse?.acceptedResponses) {
+      botLastResponse.acceptedResponses.forEach((acceptedResponse: string) => {
+        if (
+          acceptedResponse.toLowerCase().includes(userResponse.toLowerCase()) ||
+          userResponse.toLowerCase().includes(acceptedResponse.toLowerCase()) ||
+          acceptedResponse?.toLowerCase() === userResponse.toLowerCase()
+        ) {
+          isResponseFound = true;
         }
-      );
+      });
     }
 
-    if (!lastMessageDetails?.suggestedResponse?.length || isResponseFound) {
-      return sendNextMessage();
+    if (!botLastResponse?.suggestedResponse?.length || isResponseFound) {
+      return getNextMessage();
     } else {
       return undefined;
     }
@@ -69,11 +78,19 @@ export const useChat = () => {
     }
   };
 
+  const sendBotResponse = (responseId: string) => {
+    const botResponse: Message = BOT_MESSAGES?.find(
+      (message) => message.id === responseId
+    ) as Message;
+    setIsBotTyping(false);
+    setMessages((prevMessages) => [...prevMessages, botResponse]);
+  };
+
   const sendMessage = (content: string) => {
     const newMessage: Message = {
-      id: "1", //uuidv4(),
+      id: "user-message",
       content,
-      sender: "user",
+      sender: Sender.USER,
       timestamp: new Date(),
     };
 
@@ -85,8 +102,7 @@ export const useChat = () => {
 
     setTimeout(() => {
       if (botResponse) {
-        setIsBotTyping(false);
-        setMessages((prevMessages) => [...prevMessages, botResponse]);
+        dispatch(updateVisibleChatId(botResponse.id));
       } else {
         setIsBotTyping(false);
         sendLastMessageAgain();
@@ -96,11 +112,17 @@ export const useChat = () => {
 
   useEffect(() => {
     const interval = setTimeout(() => {
-      setMessages([DUMMY_MESSAGES[0]]);
+      dispatch(updateVisibleChatId(BOT_MESSAGES[0].id));
     }, 500);
 
     return () => clearTimeout(interval);
   }, []);
+
+  useEffect(() => {
+    if (botVisibleChatId) {
+      sendBotResponse(botVisibleChatId);
+    }
+  }, [botVisibleChatId]);
 
   return { messages, isBotTyping, sendMessage };
 };

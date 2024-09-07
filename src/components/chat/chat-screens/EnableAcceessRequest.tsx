@@ -8,7 +8,7 @@ export const EnableAccessRequest = () => {
   const dispatch = useDispatch();
 
   const showEnableAccessPopup = () => {
-    dispatch(updateVisibleChatId(BotMessageIds.ENABLE_ACCESS_REQUEST));
+    dispatch(updateVisibleChatId(BotMessageIds.ENABLE_ACCESS_HELPER));
   };
 
   return (

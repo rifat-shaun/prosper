@@ -1,24 +1,36 @@
 import { Message } from "@/types/Chat";
 import MessageComponent from "./Message";
-import { FC } from "react";
+import { FC, ReactNode } from "react";
 import Loader from "./Loader";
 
 interface MessageProps {
   messages: Message[];
   isBotTyping: boolean;
+  setRenderChildOnParentScreen(value: ReactNode): void;
   onSend(message: string): void;
 }
 
-const ChatWindow: FC<MessageProps> = ({ messages, isBotTyping, onSend }) => {
+const ChatWindow: FC<MessageProps> = ({
+  messages,
+  isBotTyping,
+  setRenderChildOnParentScreen,
+  onSend,
+}) => {
   return (
     <div className="h-[calc(100%-190px)] overflow-y-auto p-2 no-scrollbar relative">
       {messages.map((message: Message) => (
-        <MessageComponent
-          key={message.id}
-          message={message}
-          isBotTyping={isBotTyping}
-          onSend={onSend}
-        />
+        <>
+          {message?.renderOnFullScreen ? (
+            setRenderChildOnParentScreen(message?.content)
+          ) : (
+            <MessageComponent
+              key={message.id}
+              message={message}
+              isBotTyping={isBotTyping}
+              onSend={onSend}
+            />
+          )}
+        </>
       ))}
 
       {isBotTyping && (
@@ -27,9 +39,7 @@ const ChatWindow: FC<MessageProps> = ({ messages, isBotTyping, onSend }) => {
             className={`w-8 h-8 border border-solid border-neutral-300 rounded-full bg-[#2cb5fa]`}
           ></div>
 
-          <div
-            className={`max-w-[calc(100%-100px)] px-4 py-2`}
-          >
+          <div className={`max-w-[calc(100%-100px)] px-4 py-2`}>
             <Loader />
           </div>
         </div>

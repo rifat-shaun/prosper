@@ -1,8 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Chatbot from "./Chatbot";
+import { useDispatch } from "react-redux";
+import { updateVisibleChatId } from "./../../redux/slices/chatSlice";
 
 const ChatButton = () => {
   const [isChatOpen, setIsChatOpen] = useState<boolean>(false);
+  const dispatch = useDispatch();
 
   const handleChatButtonClick = () => {
     setIsChatOpen(!isChatOpen);
@@ -11,6 +14,10 @@ const ChatButton = () => {
   const handleCloseChat = () => {
     setIsChatOpen(false);
   };
+
+  useEffect(() => {
+    dispatch(updateVisibleChatId(""));
+  }, [isChatOpen]);
 
   return (
     <div>

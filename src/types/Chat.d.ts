@@ -6,6 +6,7 @@ export interface Message {
   sender: "user" | "bot";
   suggestedResponse?: string;
   acceptedResponses?: string[];
+  renderOnFullScreen?: boolean;
   timestamp: Date;
 }
 
