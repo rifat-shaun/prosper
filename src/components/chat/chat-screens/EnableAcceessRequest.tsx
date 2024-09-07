@@ -19,7 +19,7 @@ export const EnableAccessRequest = () => {
       </BotMessageWrapper>
 
       <div className="flex justify-center mt-2">
-        <Button onClick={showEnableAccessPopup} className="w-fit text-center">
+        <Button onClick={showEnableAccessPopup} className="w-full">
           Enable access
         </Button>
       </div>

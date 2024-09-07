@@ -11,7 +11,7 @@ interface MessageProps {
 
 const ChatWindow: FC<MessageProps> = ({ messages, isBotTyping, onSend }) => {
   return (
-    <div className="h-[calc(100%-190px)] overflow-y-auto p-2 no-scrollbar">
+    <div className="h-[calc(100%-190px)] overflow-y-auto p-2 no-scrollbar relative">
       {messages.map((message: Message) => (
         <MessageComponent
           key={message.id}

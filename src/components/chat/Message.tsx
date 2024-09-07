@@ -42,11 +42,13 @@ const MessageComponent: FC<MessageProps> = ({
       </div>
 
       {message?.suggestedResponse ? (
-        <div
-          className={`px-4 py-2 border rounded-lg font-normal text-sm text-center bg-[#EAF2F6] cursor-pointer bottom-4`}
-          onClick={() => onSend(message?.suggestedResponse || "")}
-        >
-          {message?.suggestedResponse}
+        <div className="flex justify-center">
+          <div
+            className={`px-4 py-2 border rounded-lg font-normal text-sm text-center bg-[#EAF2F6] cursor-pointer w-56`}
+            onClick={() => onSend(message?.suggestedResponse || "")}
+          >
+            {message?.suggestedResponse}
+          </div>
         </div>
       ) : null}
     </div>
