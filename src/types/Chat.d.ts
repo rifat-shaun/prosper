@@ -1,10 +1,11 @@
+import { ReactNode } from "react";
+
 export interface Message {
   id: string;
-  content: string;
+  content: ReactNode;
   sender: "user" | "bot";
   suggestedResponse?: string;
   acceptedResponses?: string[];
-  requiedResponse?: boolean;
   timestamp: Date;
 }
 

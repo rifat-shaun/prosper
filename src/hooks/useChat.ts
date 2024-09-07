@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import _ from "lodash";
 import { Message } from "../types/Chat";
-import { DUMMY_MESSAGES } from "./../components/chat/DummyMessages";
-// import { v4 as uuidv4 } from 'uuid';
+import { DUMMY_MESSAGES } from "../components/chat/BotMessages";
 
 export const useChat = () => {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -54,7 +53,7 @@ export const useChat = () => {
       );
     }
 
-    if (!lastMessageDetails?.requiedResponse || isResponseFound) {
+    if (!lastMessageDetails?.suggestedResponse?.length || isResponseFound) {
       return sendNextMessage();
     } else {
       return undefined;

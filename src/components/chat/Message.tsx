@@ -34,7 +34,7 @@ const MessageComponent: FC<MessageProps> = ({
         <div
           className={`max-w-[calc(100%-100px)] px-4 py-2 border rounded-lg font-normal text-sm ${
             message.sender === "bot"
-              ? "border-solid border-neutral-300"
+              ? ""
               : "bg-[#EAF2F6]"
           }`}
         >
