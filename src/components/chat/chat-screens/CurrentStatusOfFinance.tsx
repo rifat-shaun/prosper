@@ -14,7 +14,7 @@ export const CurrentStatusOfFinance = () => {
         updateVisibleChatId(BotMessageIds.SET_CURRENT_STATUS_OF_FINANCE)
       );
     }, 500);
-  });
+  }, []);
 
   return (
     <BotMessageWrapper>

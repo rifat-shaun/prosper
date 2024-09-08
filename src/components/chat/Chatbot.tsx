@@ -39,7 +39,7 @@ const Chatbot: FC<ChatbotProps> = ({ onClose }) => {
             onSend={sendMessage}
           />
           <hr className="my-0 h-[2px] border-0 bg-neutral-300" />
-          <ChatInput onSend={sendMessage} />
+          <ChatInput isBotTyping={isBotTyping} onSend={sendMessage} />
         </>
       )}
     </div>

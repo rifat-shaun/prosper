@@ -11,7 +11,7 @@ export const EnableAccessSuccess = () => {
     setTimeout(() => {
       dispatch(updateVisibleChatId(BotMessageIds.CURRENT_STATUS_OF_FINANCE));
     }, 500);
-  });
+  }, []);
 
   return <BotMessageWrapper>Thanks for enabling access! ✅</BotMessageWrapper>;
 };

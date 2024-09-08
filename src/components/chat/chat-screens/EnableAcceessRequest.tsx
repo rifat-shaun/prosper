@@ -1,6 +1,6 @@
 import { Button } from "../../common/base/Button";
 import { BotMessageWrapper } from "./BotMessageWrapper";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { BotMessageIds } from "./../../../constants/chat";
 import {
   updateIsChildScreenVisibleOnTopOfParent,
@@ -9,6 +9,10 @@ import {
 
 export const EnableAccessRequest = () => {
   const dispatch = useDispatch();
+  const visibleChatId = useSelector((state: any) => state.chat.visibleChatId);
+  const disableAction =
+    visibleChatId !== BotMessageIds.ENABLE_ACCESS_REQUEST &&
+    visibleChatId !== BotMessageIds.ENABLE_ACCESS_HELPER;
 
   const showEnableAccessPopup = () => {
     dispatch(updateIsChildScreenVisibleOnTopOfParent(true));
@@ -25,7 +29,8 @@ export const EnableAccessRequest = () => {
       <div className="flex justify-center mt-2">
         <Button
           onClick={showEnableAccessPopup}
-          className="w-full bg-secondary-900 text-white px-6 py-3 "
+          className="w-full bg-secondary-900 text-white px-6 py-3"
+          isDisabled={disableAction}
         >
           Enable access
         </Button>

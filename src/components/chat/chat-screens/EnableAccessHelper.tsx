@@ -1,15 +1,19 @@
 import { Button } from "./../../common/base/Button";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { BotMessageIds } from "./../../../constants/chat";
 import {
   updateIsChildScreenVisibleOnTopOfParent,
   updateVisibleChatId,
 } from "./../../../redux/slices/chatSlice";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 const ImgPath = require("./../../../assets/images/emailSettings.png");
+const globeImgPath = require("./../../../assets/images/globe.png");
 
 export const EnableAccessHelper = () => {
   const dispatch = useDispatch();
+  const visibleChatId = useSelector((state: any) => state.chat.visibleChatId);
+  const disableAction = visibleChatId !== BotMessageIds.ENABLE_ACCESS_HELPER;
 
   const showEnableAccessSuccess = () => {
     dispatch(updateIsChildScreenVisibleOnTopOfParent(false));
@@ -55,10 +59,14 @@ export const EnableAccessHelper = () => {
                 </div>
               </div>
 
-              <div className="flex justify-center">
-                <button className="flex items-center bg-[#c7e5fc] border-none outline-none focus:outline-none rounded-full font-semibold px-6 py-2 font-sans">
+              <div className="flex justify-center gap-px">
+                <button className="flex gap-2 items-center bg-[#c7e5fc] border-none outline-none focus:outline-none rounded-l-full font-semibold pl-3 pr-1.5 py-2 font-sans">
+                  <img src={globeImgPath} className="w-3" />
                   Share
                 </button>
+                <div className="flex items-center bg-[#c7e5fc] pl-1 pr-2.5 rounded-r-full">
+                    <ArrowDropDownIcon sx={{ fontSize: 16 }} />
+                  </div>
               </div>
             </div>
           </div>
@@ -107,7 +115,8 @@ export const EnableAccessHelper = () => {
         <div className="mt-2">
           <Button
             onClick={showEnableAccessSuccess}
-            className="w-full bg-secondary-900 text-white px-6 py-3 "
+            className="w-full bg-secondary-900 text-white px-6 py-3"
+            isDisabled={disableAction}
           >
             I've enabled access
           </Button>

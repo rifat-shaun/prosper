@@ -3,10 +3,11 @@ import { Button } from "../common/base/Button";
 import { ArrowRight } from "../common/icons/ArrowRight";
 
 interface ChatInputProps {
+  isBotTyping?: boolean;
   onSend(message: string): void;
 }
 
-const ChatInput: FC<ChatInputProps> = ({ onSend }) => {
+const ChatInput: FC<ChatInputProps> = ({ isBotTyping, onSend }) => {
   const [input, setInput] = useState("");
 
   const handleSend = () => {
@@ -29,6 +30,7 @@ const ChatInput: FC<ChatInputProps> = ({ onSend }) => {
       <Button
         onClick={handleSend}
         className="bg-secondary-900 text-white px-6 py-3"
+        isDisabled={isBotTyping}
       >
         <ArrowRight />
       </Button>

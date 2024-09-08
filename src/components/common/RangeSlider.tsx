@@ -7,6 +7,7 @@ interface RangeSliderProps {
   min?: number;
   max?: number;
   step?: number;
+  isDisabled?: boolean;
 }
 
 export const RangeSlider: FC<RangeSliderProps> = ({
@@ -15,6 +16,7 @@ export const RangeSlider: FC<RangeSliderProps> = ({
   min = 0,
   max = 10,
   step = 1,
+  isDisabled = false,
 }) => {
   const [percentValue, setPercentValue] = useState(0);
 
@@ -36,6 +38,7 @@ export const RangeSlider: FC<RangeSliderProps> = ({
         min={min}
         max={max}
         values={values}
+        disabled={isDisabled}
         onChange={(values) => setValues(values)}
         renderTrack={({ props, children }) => {
           const percentage = ((values[0] - min) / (max - min)) * 100;

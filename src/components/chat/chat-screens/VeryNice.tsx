@@ -11,7 +11,7 @@ export const VeryNice = () => {
     setTimeout(() => {
       dispatch(updateVisibleChatId(BotMessageIds.ADD_INCOME_REQUEST));
     }, 500);
-  });
+  }, []);
 
   return <BotMessageWrapper>Very nice!</BotMessageWrapper>;
 };
