@@ -2,6 +2,8 @@ import { useState } from "react";
 import { CircleIcon } from "../common/icons/CircleIcon";
 import { ChatStep } from "@/types/Chat";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
+import { useSelector } from "react-redux";
+import { BOT_MESSAGES } from "./BotMessages";
 
 const greenTickPath = require("./../../assets/images/greenTick.png");
 const bankPath = require("./../../assets/images/bank.png");
@@ -38,6 +40,11 @@ const Steps: ChatStep[] = [
 ];
 
 export const ChatBanner = () => {
+  const visibleChatId = useSelector((state: any) => state.chat.visibleChatId);
+  const currentChatIndex = BOT_MESSAGES.findIndex(
+    (message: any) => message.id === visibleChatId
+  );
+
   const [showAllSteps, setShowAllSteps] = useState<boolean>(false);
   const [activeStep, setActiveStep] = useState<number>(1);
 
@@ -52,22 +59,32 @@ export const ChatBanner = () => {
 
   return (
     <div className="relative w-full">
-      <div className="h-9 bg-primary-900 font-semibold text-white flex justify-between items-center px-3 py-2">
+      <div
+        className={`h-9 font-semibold  flex justify-between items-center px-3 py-2 ${
+          currentChatIndex > 2
+            ? "bg-[#EAF2F6] text-black"
+            : "bg-primary-900 text-white"
+        }`}
+      >
         {Steps[activeStep - 1]?.title} ({activeStep}/{Steps.length})
         <span onClick={toggleSteps} className="cursor-pointer">
-          <CircleIcon />
+          <CircleIcon fill={currentChatIndex > 2 ? "#000" : "#fff"} />
         </span>
       </div>
 
       {showAllSteps && (
-        <div className="absolute top-12 z-50 bg-primary-900 flex flex-col w-full pb-2">
+        <div
+          className={`absolute top-12 z-50 flex flex-col w-full pb-2 ${
+            currentChatIndex > 2 ? "bg-[#EAF2F6]" : "bg-primary-900"
+          }`}
+        >
           {Steps?.map((step: ChatStep, index: number) => (
             <div
               key={index}
               className={`cursor-pointer px-3 py-2 flex items-center gap-2 ${
                 activeStep === step.id
-                  ? "font-semibold text-white"
-                  : "font-medium text-gray-300"
+                  ? `font-semibold ${currentChatIndex > 2 ? "text-black" : "text-white"}`
+                  : `font-medium ${currentChatIndex > 2 ? "text-gray-800" : "text-gray-100"}`
               }`}
               onClick={() => handleOnActiveItemChange(step.id)}
             >
