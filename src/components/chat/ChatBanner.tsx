@@ -74,7 +74,7 @@ export const ChatBanner = () => {
 
       {showAllSteps && (
         <div
-          className={`absolute top-12 z-50 flex flex-col w-full pb-2 ${
+          className={`absolute top-12 z-50 flex flex-col w-full pb-2 pt-3 ${
             currentChatIndex > 2 ? "bg-[#EAF2F6]" : "bg-primary-900"
           }`}
         >
