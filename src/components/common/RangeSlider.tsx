@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 import { Range } from "react-range";
 
 interface RangeSliderProps {
@@ -18,7 +18,7 @@ export const RangeSlider: FC<RangeSliderProps> = ({
   step = 1,
   isDisabled = false,
 }) => {
-  const [percentValue, setPercentValue] = useState(0);
+  const percentValue = ((values[0] - min) / (max - min)) * 100;
 
   return (
     <div
@@ -41,18 +41,17 @@ export const RangeSlider: FC<RangeSliderProps> = ({
         disabled={isDisabled}
         onChange={(values) => setValues(values)}
         renderTrack={({ props, children }) => {
-          const percentage = ((values[0] - min) / (max - min)) * 100;
-          setPercentValue(percentage);
           return (
             <div
               {...props}
+              key={'thumb'}
               style={{
                 height: "16px",
                 width: "180px",
                 background: `linear-gradient(
                   to right, 
-                  #777 ${percentage}%, 
-                  #eee ${percentage}%
+                  #777 ${percentValue}%, 
+                  #eee ${percentValue}%
                 )`,
                 position: "relative",
               }}
@@ -88,6 +87,7 @@ export const RangeSlider: FC<RangeSliderProps> = ({
         renderThumb={({ props }) => (
           <div
             {...props}
+            key={'thumb'}
             style={{
               height: "24px",
               width: "4px",
