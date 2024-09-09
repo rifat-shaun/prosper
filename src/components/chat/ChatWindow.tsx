@@ -1,6 +1,6 @@
 import { Message } from "@/types/Chat";
 import MessageComponent from "./Message";
-import { FC, ReactNode } from "react";
+import { FC, ReactNode, useEffect } from "react";
 import Loader from "./Loader";
 import { useSelector } from "react-redux";
 const ladyImgPath = require("./../../assets/images/ladyImg.png");
@@ -22,25 +22,28 @@ const ChatWindow: FC<MessageProps> = ({
     (state: any) => state.chat.isChildScreenVisibleOnTopOfParent
   );
 
-  const renderOnParent = (content: ReactNode) => {
-    setRenderChildOnParentScreen(content);
-  };
+  useEffect(() => {
+    const messageWithFullScreenRender = messages.find(
+      (message) => message?.renderOnFullScreen && canRenderOnParent
+    );
+
+    if (messageWithFullScreenRender) {
+      setRenderChildOnParentScreen(messageWithFullScreenRender?.content);
+    }
+  }, [messages, canRenderOnParent, setRenderChildOnParentScreen]);
 
   return (
     <div className="h-[calc(100%-190px)] overflow-y-auto p-2 no-scrollbar relative">
-      {messages.map((message: Message) => (
-        <>
-          {message?.renderOnFullScreen && canRenderOnParent ? (
-            renderOnParent(message?.content)
-          ) : message?.renderOnFullScreen ? null : (
+      {messages.map((message: Message, index: number) => (
+        <div key={index}>
+          {!message?.renderOnFullScreen && (
             <MessageComponent
-              key={message.id}
               message={message}
               isBotTyping={isBotTyping}
               onSend={onSend}
             />
           )}
-        </>
+        </div>
       ))}
 
       {isBotTyping && (

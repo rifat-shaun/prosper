@@ -107,8 +107,6 @@ export const useChat = () => {
     removeLastSuggestedMessage();
     setMessages((prevMessages) => [...prevMessages, newMessage]);
 
-    console.log("===> botResponse", botResponse);
-
     setTimeout(() => {
       if (botResponse) {
         dispatch(updateVisibleChatId(botResponse.id));
